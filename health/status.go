@@ -11,7 +11,7 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/robustirc/robustirc/internal/robusthttp"
+	"github.com/robustirc/internal/robusthttp"
 )
 
 type ServerStatus struct {
