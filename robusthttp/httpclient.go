@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/robustirc/bridge/robustsession"
+	"github.com/robustirc/internal/flakyhttp"
 	"github.com/robustirc/rafthttp"
 )
 
@@ -18,6 +19,10 @@ var (
 	tlsCAFile = flag.String("tls_ca_file",
 		"",
 		"Use the specified file as trusted CA instead of the system CAs. Useful for testing.")
+
+	rulesPath = flag.String("flakyhttp_rules_path",
+		"",
+		"If non-empty, a path to a flakyhttp.rules file for failure injection")
 )
 
 type robustDoer struct {
@@ -34,7 +39,7 @@ func (r *robustDoer) Do(req *http.Request) (*http.Response, error) {
 
 // Transport returns an *http.Transport respecting the *tlsCAFile flag and
 // using a 10 second read/write timeout.
-func Transport(deadlined bool) *http.Transport {
+func Transport(deadlined bool) http.RoundTripper {
 	var tlsConfig *tls.Config
 	if *tlsCAFile != "" {
 		roots := x509.NewCertPool()
@@ -46,6 +51,20 @@ func Transport(deadlined bool) *http.Transport {
 			log.Fatalf("Could not parse %q, try deleting it", *tlsCAFile)
 		}
 		tlsConfig = &tls.Config{RootCAs: roots}
+	}
+	var rt http.RoundTripper
+	if *rulesPath != "" {
+		var err error
+		var peerAddr string
+		if f := flag.Lookup("peer_addr"); f != nil {
+			peerAddr = f.Value.String()
+		}
+		rt, err = flakyhttp.NewRoundTripper(*rulesPath, "peeraddr="+peerAddr)
+		if err != nil {
+			log.Fatal(err)
+		}
+		rt.(*flakyhttp.RoundTripper).Underlying.TLSClientConfig = tlsConfig
+		return rt
 	}
 	transport := &http.Transport{
 		TLSClientConfig:     tlsConfig,
