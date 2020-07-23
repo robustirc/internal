@@ -85,12 +85,18 @@ func Transport(deadlined bool) http.RoundTripper {
 	return transport
 }
 
-// Client returns a net/http.Client which will set the network password
-// in Do(), respects the *tlsCAFile flag and tracks the latency of requests.
-func Client(password string, deadlined bool) rafthttp.Doer {
+// clientImpl can be overridden in custom builds where additional source files
+// in this package can change clientImpl from their func init.
+var clientImpl = func(password string, deadlined bool) rafthttp.Doer {
 	doer := robustDoer{
 		client:   http.Client{Transport: Transport(deadlined)},
 		password: password,
 	}
 	return &doer
+}
+
+// Client returns a net/http.Client which will set the network password
+// in Do(), respects the *tlsCAFile flag and tracks the latency of requests.
+func Client(password string, deadlined bool) rafthttp.Doer {
+	return clientImpl(password, deadlined)
 }
