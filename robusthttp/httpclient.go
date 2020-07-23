@@ -1,3 +1,5 @@
+// Package robusthttp implements RobustIRC-specific logic for using HTTP as a
+// transport, specifically setting the network password on all requests.
 package robusthttp
 
 import (
