@@ -1,6 +1,7 @@
 package health
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -36,6 +37,9 @@ func GetServerStatus(server, networkPassword string) (ServerStatus, error) {
 	if err != nil {
 		return status, err
 	}
+	ctx, canc := context.WithTimeout(context.Background(), 5*time.Second)
+	defer canc()
+	req = req.WithContext(ctx)
 	req.Header.Set("Accept", "application/json")
 	resp, err := robusthttp.Client(networkPassword, true).Do(req)
 	if err != nil {
