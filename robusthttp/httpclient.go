@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/robustirc/bridge/robustsession"
+	"github.com/robustirc/bridge/deadlineconn"
 	"github.com/robustirc/internal/flakyhttp"
 	"github.com/robustirc/rafthttp"
 )
@@ -74,7 +74,7 @@ func Transport(deadlined bool) http.RoundTripper {
 	}
 	if deadlined {
 		// Deadline dialing and every read/write.
-		transport.Dial = robustsession.DeadlineConnDialer(2*time.Second, 10*time.Second, 10*time.Second)
+		transport.Dial = deadlineconn.Dialer(2*time.Second, 10*time.Second, 10*time.Second)
 	} else {
 		// Deadline dialing, like http.DefaultTransport.
 		transport.Dial = (&net.Dialer{

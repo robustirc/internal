@@ -38,6 +38,8 @@ github.com/rjeczalik/notify v0.9.2 h1:MiTWrPj55mNDHEiIX5YUSKefw/+lCQVoAFmD6oQm5w
 github.com/rjeczalik/notify v0.9.2/go.mod h1:aErll2f0sUX9PXZnVNyeiObbmTlk5jnMoCa4QEjJeqM=
 github.com/robustirc/bridge v1.7.3 h1:rNeZw+W/SSyU8jF7FYbCqg2M4fGPQj/3HaePcEBws9k=
 github.com/robustirc/bridge v1.7.3/go.mod h1:/BC0GGix13AzZKm99Hb80m3OEp4Q3GS6hkwSAN16VBw=
+github.com/robustirc/bridge v1.7.4-0.20200723135014-0da71ab55111 h1:MljqgGKhj0d2ewi1LzsP547Bkckm41nqhyjv9kfkNwQ=
+github.com/robustirc/bridge v1.7.4-0.20200723135014-0da71ab55111/go.mod h1:rvFLubPZZr88qw52X07Pv/Sd3yvSzi5rXriGAWyg5p4=
 github.com/robustirc/rafthttp v0.0.0-20160522203950-0785f8c77b66 h1:tQSomnse16MbLgoqtyIDn/nH3fME9PvPpyYcnfA0C5g=
 github.com/robustirc/rafthttp v0.0.0-20160522203950-0785f8c77b66/go.mod h1:l55/CrGfro/Ss2yiNLyMOCuHFzll0IoOcqGkGQivC1c=
 github.com/sorcix/irc v1.1.4-0.20170501124343-8becc86e7db2 h1:s9tGJyZAss54vMNYrMVOoLTHVdPVtbjqA85lb2v6cxE=
@@ -53,3 +55,4 @@ golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e/go.mod h1:RxMgew5VJxzue5/jJ
 golang.org/x/sys v0.0.0-20180926160741-c2ed4eda69e7 h1:bit1t3mgdR35yN0cX0G8orgLtOuyL9Wqxa1mccLB0ig=
 golang.org/x/sys v0.0.0-20180926160741-c2ed4eda69e7/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190523142557-0e01d883c5c5/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+gopkg.in/sorcix/irc.v2 v2.0.0-20190306112350-8d7a73540b90/go.mod h1:PmJkUcwbuPi1FiZ9Rarr6wzVMvzkO7uWqH1jwrMkgW0=
