@@ -39,9 +39,9 @@ func (r *robustDoer) Do(req *http.Request) (*http.Response, error) {
 	return resp, err
 }
 
-// Transport returns an *http.Transport respecting the *tlsCAFile flag and
-// using a 10 second read/write timeout.
-func Transport(deadlined bool) http.RoundTripper {
+// transportImpl can be overridden in custom builds where additional source
+// files in this package can change clientImpl from their func init.
+var transportImpl = func(deadlined bool) http.RoundTripper {
 	var tlsConfig *tls.Config
 	if *tlsCAFile != "" {
 		roots := x509.NewCertPool()
@@ -83,6 +83,12 @@ func Transport(deadlined bool) http.RoundTripper {
 		}).Dial
 	}
 	return transport
+}
+
+// Transport returns an *http.Transport respecting the *tlsCAFile flag and
+// using a 10 second read/write timeout.
+func Transport(deadlined bool) http.RoundTripper {
+	return transportImpl(deadlined)
 }
 
 // clientImpl can be overridden in custom builds where additional source files
