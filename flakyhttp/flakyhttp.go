@@ -91,11 +91,7 @@ func NewRoundTripper(rulesPath string, pairs ...string) (*RoundTripper, error) {
 		}
 		return dialer.DialContext(ctx, network, addr)
 	}
-	events := []notify.Event{
-		notify.InCloseWrite, // ioutil.WriteFile (write in-place)
-		notify.InMovedTo,    // renameio.WriteFile (write with temporary file)
-	}
-	if err := notify.Watch(filepath.Dir(rulesPath), rt.notifyChan, events...); err != nil {
+	if err := notify.Watch(filepath.Dir(rulesPath), rt.notifyChan, notifyEvents...); err != nil {
 		return nil, err
 	}
 	go rt.handleConfigUpdates()
